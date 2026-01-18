@@ -6,3 +6,4 @@ export default async function CoursesPage({ params, }: { params: Promise<{ cid: 
  redirect(`/courses/${cid}/home`);
 }
 
+
