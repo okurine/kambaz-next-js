@@ -8,7 +8,12 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
           <Link href="/courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="reactjs" />
+            <Image
+              src="/images/reactjs.jpg"
+              width={200}
+              height={150}
+              alt="reactjs"
+            />
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -18,8 +23,44 @@ export default function Dashboard() {
             </div>
           </Link>
         </div>
-        <div className="wd-dashboard-course"> ... </div>
-        <div className="wd-dashboard-course"> ... </div>
+        <br></br>
+
+        {/* Course #2 */}
+        <div className="wd-dashboard-course">
+          <Link href="/courses/1235" className="wd-dashboard-course-link">
+            <Image
+              src="/images/reactjs.jpg"
+              width={200}
+              height={150}
+              alt="reactjs"
+            />
+            <div>
+              <h5> CS1235 Course 2 </h5>
+              <p className="wd-dashboard-course-title">The second course</p>
+              <button> Go </button>
+            </div>
+          </Link>
+        </div>
+
+        {/* Course #3 */}
+        <div className="wd-dashboard-course">
+          <Link href="/courses/1236" className="wd-dashboard-course-link">
+            <Image
+              src="/images/reactjs.jpg"
+              width={200}
+              height={150}
+              alt="reactjs"
+            />
+            <div>
+              <h5> CS1236 Course 3 </h5>
+              <p className="wd-dashboard-course-title">The third course</p>
+              <button> Go </button>
+            </div>
+          </Link>
+        </div>
+
+        {/* Course #4 if I need one*/}
       </div>
     </div>
-);}
+  );
+}
