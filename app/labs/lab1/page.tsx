@@ -1,4 +1,3 @@
-"use client";
 export default function Lab1() {
   return (
     <div id="wd-lab1">
@@ -204,14 +203,14 @@ export default function Lab1() {
           culpa qui officia deserunt mollit anim id est laborum.
         </textarea>
       </div>
-      <h5 id="wd-buttons">Buttons</h5>
+      {/* <h5 id="wd-buttons">Buttons</h5>
       <button
         type="button"
         onClick={() => alert("Life is Good!")}
         id="wd-all-good"
       >
         Hello World!
-      </button>
+      </button> */}
       <h5 id="wd-radio-buttons">Radio buttons</h5>
       <label>Favorite movie genre:</label>
       <br />
