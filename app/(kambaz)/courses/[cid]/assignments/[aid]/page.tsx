@@ -2,7 +2,6 @@ export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">
-      
         <h3>Assignment Name</h3>
       </label>
       <input id="wd-name" defaultValue="A1 - ENV + HTML" /> <br />
@@ -16,8 +15,9 @@ export default function AssignmentEditor() {
         Kambaz application, Links to all relevant source code repositories. The
         Kambaz application should include a link to navigate back to the landing
         page.
-      </textarea><br /><br />
-
+      </textarea>
+      <br />
+      <br />
       <table>
         {/* Points Field */}
         <tr>
@@ -65,12 +65,12 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-submission-type">
               <option selected value="ONLINE">
-            Online
-          </option>
-          <option value="IN-PERSON">In-Person</option>
+                Online
+              </option>
+              <option value="IN-PERSON">In-Person</option>
             </select>
 
-        {/* Online Entry Options */}
+            {/* Online Entry Options */}
             <p>Online Entry Options</p>
             <input type="checkbox" id="wd-text-entry" />
             <label htmlFor="wd-text-entry">Text Entry</label>
@@ -96,19 +96,15 @@ export default function AssignmentEditor() {
           <td>
             <label htmlFor="wd-assign-to">Assign to</label>
             <br />
-            <input
-              id="wd-assign-to"
-              defaultValue="Everyone"
-            />
-            <br /><br />
+            <input id="wd-assign-to" defaultValue="Everyone" />
+            <br />
+            <br />
 
             <label htmlFor="wd-due-date">Due</label>
             <br />
-            <input
-              type="date"
-              id="wd-due-date"
-              defaultValue="2024-05-13"
-            /><br /><br />
+            <input type="date" id="wd-due-date" defaultValue="2024-05-13" />
+            <br />
+            <br />
 
             {/* Available from */}
             <div>
@@ -131,14 +127,11 @@ export default function AssignmentEditor() {
                 defaultValue="2024-05-20"
               />
             </div>
-            
           </td>
         </tr>
       </table>
-
       {/* line on top of button */}
       <hr />
-
       <div>
         <button type="button">Cancel</button>
         <button type="button">Save</button>

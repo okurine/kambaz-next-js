@@ -4,6 +4,10 @@ export default function labs() {
    <div id="wd-labs">
      <h1>Ella Xu's Labs (CS4550.33211)</h1>
      <ul>
+      <li>
+         <a href="https://github.com/okurine/kambaz-next-js" 
+         id="wd-git-link" target="_blank">Ella's GitHub</a><br/>
+       </li>
        <li>
          <Link href="/labs/lab1" id="wd-lab1-link">
            Lab 1: HTML Examples </Link>
