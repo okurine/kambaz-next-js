@@ -106,12 +106,59 @@ export default function Lab1() {
                       <td>2/10/21</td>
                       <td>90</td>
                     </tr>
-                    <tr> ... </tr>
+                    <tr>
+                      <td>Q3</td>
+                      <td>Topic 3</td>
+                      <td>2/17/21</td>
+                      <td>94</td>
+                    </tr>
+                    <tr>
+                      <td>Q4</td>
+                      <td>Topic 4</td>
+                      <td>2/24/21</td>
+                      <td>96</td>
+                    </tr>
+                    <tr>
+                      <td>Q5</td>
+                      <td>Topic 5</td>
+                      <td>3/2/21</td>
+                      <td>98</td>
+                    </tr>
+                    <tr>
+                      <td>Q6</td>
+                      <td>Topic 6</td>
+                      <td>3/9/21</td>
+                      <td>95</td>
+                    </tr>
+                    <tr>
+                      <td>Q7</td>
+                      <td>Topic 7</td>
+                      <td>3/16/21</td>
+                      <td>89</td>
+                    </tr>
+                    <tr>
+                      <td>Q8</td>
+                      <td>Topic 8</td>
+                      <td>3/23/21</td>
+                      <td>92</td>
+                    </tr>
+                    <tr>
+                      <td>Q9</td>
+                      <td>Topic 9</td>
+                      <td>3/30/21</td>
+                      <td>100</td>
+                    </tr>
+                    <tr>
+                      <td>Q10</td>
+                      <td>Topic 10</td>
+                      <td>4/6/21</td>
+                      <td>100</td>
+                    </tr>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colSpan={3}>Average</td>
-                      <td>90</td>
+                      <td>93.9</td>
                     </tr>
                   </tfoot>
                 </table>
