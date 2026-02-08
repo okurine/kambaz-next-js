@@ -1,6 +1,5 @@
 import "./MediaQueriesDemo.css";
 
-
 export default function MediaQueriesDemo() {
  return (
    <div className="wd-media-queries-demo">

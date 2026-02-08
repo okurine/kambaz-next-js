@@ -1,140 +1,137 @@
+"use client";
+import {
+  Button,
+  FormControl,
+  FormSelect,
+  FormCheck,
+  Row,
+  Col,
+} from "react-bootstrap";
+
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">
-        <h3>Assignment Name</h3>
+    <div id="wd-assignments-editor" className="p-4">
+
+      {/* Assignment Name */}
+      <label htmlFor="wd-assignment-name" className="mb-2">
+        Assignment Name
       </label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" /> <br />
-      <br />
-      <textarea id="wd-description" cols={50} rows={11}>
-        The assignment is available online Submit a link to the landing page of
-        your Web application running on Vercel. The landing page should be the
-        Kambaz application with a link to the Lab exercises. Lab 1 should be the
-        landing page of the Lab exercises and should include the following: Your
-        full name and section, Links to each of the lab assignments, Link to the
-        Kambaz application, Links to all relevant source code repositories. The
-        Kambaz application should include a link to navigate back to the landing
-        page.
-      </textarea>
-      <br />
-      <br />
-      <table>
-        {/* Points Field */}
-        <tr>
-          <td align="right" valign="top">
+      <FormControl
+        id="wd-assignment-name"
+        defaultValue="A1"
+        className="mb-4"
+        style={{ maxWidth: "700px" }}
+      />
+
+      {/* Description */}
+      <FormControl
+        id="wd-description"
+        as="textarea"
+        style={{ height: "250px", maxWidth: "700px" }}
+        className="mb-4"
+        defaultValue={
+          `The assignment is available online.\n` +
+          `Submit a link to the landing page of your Web application running on Vercel.\n` +
+          `The landing page should include the following:\n` +
+          `- Your full name and section\n` +
+          `- Links to each of the lab assignments\n` +
+          `- Link to the Kambaz application\n` +
+          `- Links to all relevant source repositories\n` +
+          `The Kambaz application should include a link to navigate back to the landing page.`
+        }
+      />
+
+      <div style={{ maxWidth: "700px" }}>
+        {/* Points */}
+        <Row className="align-items-center mb-3">
+          <Col sm={3} className="text-end">
             <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" defaultValue={100} />
-          </td>
-        </tr>
-        <br />
+          </Col>
+          <Col sm={9}>
+            <FormControl id="wd-points" defaultValue="100" />
+          </Col>
+        </Row>
 
         {/* Assignment Group */}
-        <tr>
-          <td align="right" valign="top">
+        <Row className="align-items-center mb-3">
+          <Col sm={3} className="text-end">
             <label htmlFor="wd-group">Assignment Group</label>
-          </td>
-          <td>
-            <select id="wd-group">
-              <option value="ASSIGNMENTS">Assignments</option>
+          </Col>
+          <Col sm={9}>
+            <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
+              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="OTHER">Other</option>
-            </select>
-          </td>
-        </tr>
-        <br />
+            </FormSelect>
+          </Col>
+        </Row>
 
         {/* Display Grade */}
-        <tr>
-          <td align="right" valign="top">
+        <Row className="align-items-center mb-3">
+          <Col sm={3} className="text-end">
             <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as">
+          </Col>
+          <Col sm={9}>
+            <FormSelect id="wd-display-grade-as" defaultValue="PERCENTAGE">
               <option value="PERCENTAGE">Percentage</option>
-            </select>
-          </td>
-        </tr>
-        <br />
+            </FormSelect>
+          </Col>
+        </Row>
 
         {/* Submission Type */}
-        <tr>
-          <td align="right" valign="top">
+        <Row className="align-items-start mb-3">
+          <Col sm={3} className="text-end">
             <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select id="wd-submission-type">
-              <option selected value="ONLINE">
-                Online
-              </option>
-              <option value="IN-PERSON">In-Person</option>
-            </select>
+          </Col>
+          <Col sm={9}>
+            <div className="border rounded p-3">
+              <FormSelect id="wd-submission-type" defaultValue="ONLINE" className="mb-3">
+                <option value="ONLINE">Online</option>
+                <option value="IN-PERSON">In-Person</option>
+              </FormSelect>
 
-            {/* Online Entry Options */}
-            <p>Online Entry Options</p>
-            <input type="checkbox" id="wd-text-entry" />
-            <label htmlFor="wd-text-entry">Text Entry</label>
-            <br />
-            <input type="checkbox" id="wd-website-url" />
-            <label htmlFor="wd-website-url">Website URL</label>
-            <br />
-            <input type="checkbox" id="wd-media-recordings" />
-            <label htmlFor="wd-media-recordings">Media Recordings</label>
-            <br />
-            <input type="checkbox" id="wd-student-annotation" />
-            <label htmlFor="wd-student-annotation">Student Annotation</label>
-            <br />
-            <input type="checkbox" id="wd-file-upload" />
-            <label htmlFor="wd-file-upload">File Uploads</label>
-          </td>
-        </tr>
-        <br />
-
-        {/* Assign To */}
-        <tr>
-          <td align="right" valign="top"></td>
-          <td>
-            <label htmlFor="wd-assign-to">Assign to</label>
-            <br />
-            <input id="wd-assign-to" defaultValue="Everyone" />
-            <br />
-            <br />
-
-            <label htmlFor="wd-due-date">Due</label>
-            <br />
-            <input type="date" id="wd-due-date" defaultValue="2024-05-13" />
-            <br />
-            <br />
-
-            {/* Available from */}
-            <div>
-              <label htmlFor="wd-available-from">Available from</label>
-              <br />
-              <input
-                type="date"
-                id="wd-available-from"
-                defaultValue="2024-05-06"
-              />
+              <label className="fw-bold mb-2">Online Entry Options</label>
+              <FormCheck type="checkbox" id="wd-text-entry" label="Text Entry" className="mb-2" />
+              <FormCheck type="checkbox" id="wd-website-url" label="Website URL" className="mb-2" />
+              <FormCheck type="checkbox" id="wd-media-recordings" label="Media Recordings" className="mb-2" />
+              <FormCheck type="checkbox" id="wd-student-annotation" label="Student Annotation" className="mb-2" />
+              <FormCheck type="checkbox" id="wd-file-upload" label="File Uploads" className="mb-2" />
             </div>
+          </Col>
+        </Row>
 
-            {/* Until */}
-            <div>
-              <label htmlFor="wd-available-until">Until</label>
-              <br />
-              <input
-                type="date"
-                id="wd-available-until"
-                defaultValue="2024-05-20"
-              />
+        {/* Assign Section */}
+        <Row className="align-items-start mb-4">
+          <Col sm={3} className="text-end">
+            <label>Assign</label>
+          </Col>
+          <Col sm={9}>
+            <div className="border rounded p-3">
+              <label htmlFor="wd-assign-to" className="fw-bold mb-1">Assign to</label>
+              <FormControl id="wd-assign-to" defaultValue="Everyone" className="mb-3" />
+
+              <label htmlFor="wd-due-date" className="fw-bold mb-1">Due</label>
+              <FormControl type="date" id="wd-due-date" defaultValue="2024-05-13" className="mb-3" />
+
+              <Row>
+                <Col>
+                  <label htmlFor="wd-available-from" className="fw-bold mb-1">Available from</label>
+                  <FormControl type="date" id="wd-available-from" defaultValue="2024-05-06" />
+                </Col>
+                <Col>
+                  <label htmlFor="wd-available-until" className="fw-bold mb-1">Until</label>
+                  <FormControl type="date" id="wd-available-until" />
+                </Col>
+              </Row>
             </div>
-          </td>
-        </tr>
-      </table>
-      {/* line on top of button */}
-      <hr />
-      <div>
-        <button type="button">Cancel</button>
-        <button type="button">Save</button>
+          </Col>
+        </Row>
+
+        {/* Buttons */}
+        <hr />
+        <div className="d-flex justify-content-end gap-2">
+          <Button variant="secondary" className="bg-light text-dark border">Cancel</Button>
+          <Button variant="danger">Save</Button>
+        </div>
       </div>
     </div>
   );
