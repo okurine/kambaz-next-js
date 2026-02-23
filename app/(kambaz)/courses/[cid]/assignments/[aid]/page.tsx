@@ -1,4 +1,7 @@
 "use client";
+import { useParams } from "next/navigation";
+import * as db from "../../../../database";
+import Link from "next/link";
 import {
   Button,
   FormControl,
@@ -9,6 +12,8 @@ import {
 } from "react-bootstrap";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
   return (
     <div id="wd-assignments-editor" className="p-4">
 
@@ -18,7 +23,7 @@ export default function AssignmentEditor() {
       </label>
       <FormControl
         id="wd-assignment-name"
-        defaultValue="A1"
+        defaultValue={assignment?.title}
         className="mb-4"
         style={{ maxWidth: "700px" }}
       />
@@ -29,16 +34,8 @@ export default function AssignmentEditor() {
         as="textarea"
         style={{ height: "250px", maxWidth: "700px" }}
         className="mb-4"
-        defaultValue={
-          `The assignment is available online.\n` +
-          `Submit a link to the landing page of your Web application running on Vercel.\n` +
-          `The landing page should include the following:\n` +
-          `- Your full name and section\n` +
-          `- Links to each of the lab assignments\n` +
-          `- Link to the Kambaz application\n` +
-          `- Links to all relevant source repositories\n` +
-          `The Kambaz application should include a link to navigate back to the landing page.`
-        }
+        defaultValue={assignment?.description}
+
       />
 
       <div style={{ maxWidth: "700px" }}>
@@ -48,7 +45,7 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-points">Points</label>
           </Col>
           <Col sm={9}>
-            <FormControl id="wd-points" defaultValue="100" />
+            <FormControl id="wd-points" defaultValue={assignment?.points} />
           </Col>
         </Row>
 
@@ -110,16 +107,16 @@ export default function AssignmentEditor() {
               <FormControl id="wd-assign-to" defaultValue="Everyone" className="mb-3" />
 
               <label htmlFor="wd-due-date" className="fw-bold mb-1">Due</label>
-              <FormControl type="date" id="wd-due-date" defaultValue="2024-05-13" className="mb-3" />
+              <FormControl type="date" id="wd-due-date" defaultValue={assignment?.due} className="mb-3" />
 
               <Row>
                 <Col>
                   <label htmlFor="wd-available-from" className="fw-bold mb-1">Available from</label>
-                  <FormControl type="date" id="wd-available-from" defaultValue="2024-05-06" />
+                  <FormControl type="date" id="wd-available-from" defaultValue={assignment?.availableFrom} />
                 </Col>
                 <Col>
                   <label htmlFor="wd-available-until" className="fw-bold mb-1">Until</label>
-                  <FormControl type="date" id="wd-available-until" />
+                  <FormControl type="date" id="wd-available-until" defaultValue={assignment?.availableUntil}/>
                 </Col>
               </Row>
             </div>

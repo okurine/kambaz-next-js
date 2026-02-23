@@ -14,8 +14,13 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { BsGripVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import * as db from "../../../database";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments.filter((a: any) => a.course === cid);
+
   return (
     <div id="wd-assignments">
       <div className="d-flex align-items-center gap-2 mb-4">
@@ -26,29 +31,13 @@ export default function Assignments() {
           <FormControl />
         </InputGroup>
 
-        <Button
-          variant="secondary"
-          size="lg"
-          className="ms-2 "
-          id="wd-add-module-btn"
-        >
-          <FaPlus
-            className="position-relative me-2"
-            style={{ bottom: "1px" }}
-          />
+        <Button variant="secondary" size="lg" className="ms-2 " id="wd-add-module-btn">
+          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
           Group
         </Button>
 
-        <Button
-          variant="danger"
-          size="lg"
-          className="m-1"
-          id="wd-add-module-btn"
-        >
-          <FaPlus
-            className="position-relative me-2"
-            style={{ bottom: "1px" }}
-          />
+        <Button variant="danger" size="lg" className="m-1" id="wd-add-module-btn">
+          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
           Assignment
         </Button>
       </div>
@@ -69,63 +58,27 @@ export default function Assignments() {
         </div>
 
         <ListGroup className="wd-lessons rounded-0">
-          <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center gap-2">
-                <AssignmentControlButtons />
-                <Link href={`/courses/1234/assignments/123`} className="text-decoration-none">
-                <span>A1</span>
-                </Link>
+          {assignments.map((assignment: any) => (
+            <ListGroupItem key={assignment._id}
+              className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
+              <div className="d-flex flex-column">
+                <div className="d-flex align-items-center gap-2">
+                  <AssignmentControlButtons />
+                  <Link href={`/courses/${cid}/assignments/${assignment._id}`}
+                    className="text-decoration-none">
+                    <span>{assignment.title}</span>
+                  </Link>
+                </div>
+                <div className="text-muted small ms-5">
+                  <span className="text-danger">Multiple Modules</span> |{" "}
+                  <strong>Not available until</strong> Jan 17 at 12:00am
+                  <br />
+                  <strong>Due</strong> Jan 25 at 11:59pm | 100 pts
+                </div>
               </div>
-              <div className="text-muted small ms-5">
-                <span className="text-danger">Multiple Modules</span> |{" "}
-                <strong>Not available until</strong> Jan 17 at 12:00am
-                <br />
-                <strong>Due</strong> Jan 25 at 11:59pm | 100 pts
-              </div>
-            </div>
-            <LessonControlButtons />
-          </ListGroupItem>
-        </ListGroup>
-
-        <ListGroup className="wd-lessons rounded-0">
-          <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center gap-2">
-                <AssignmentControlButtons />
-                <Link href={`/courses/1234/assignments/123`} className="text-decoration-none">
-                <span>A2</span>
-                </Link>
-              </div>
-              <div className="text-muted small ms-5">
-                <span className="text-danger">Multiple Modules</span> |{" "}
-                <strong>Not available until</strong> May 13 at 12:00am
-                <br />
-                <strong>Due</strong> May 20 at 11:59pm | 100 pts
-              </div>
-            </div>
-            <LessonControlButtons />
-          </ListGroupItem>
-        </ListGroup>
-
-        <ListGroup className="wd-lessons rounded-0">
-          <ListGroupItem className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
-            <div className="d-flex flex-column">
-              <div className="d-flex align-items-center gap-2">
-                <AssignmentControlButtons />
-                <Link href={`/courses/1234/assignments/123`} className="text-decoration-none">
-                <span>A3</span>
-                </Link>
-              </div>
-              <div className="text-muted small ms-5">
-                <span className="text-danger">Multiple Modules</span> |{" "}
-                <strong>Not available until</strong> May 20 at 12:00am
-                <br />
-                <strong>Due</strong> May 27 at 11:59pm | 100 pts
-              </div>
-            </div>
-            <LessonControlButtons />
-          </ListGroupItem>
+              <LessonControlButtons />
+            </ListGroupItem>
+          ))}
         </ListGroup>
       </ListGroupItem>
     </div>

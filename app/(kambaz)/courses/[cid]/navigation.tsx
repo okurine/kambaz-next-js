@@ -1,32 +1,35 @@
-import Link from "next/link";
-export default function CourseNavigation() {
-  return (
-    <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
-      <Link href="/courses/1234/home" id="wd-course-home-link"
-      className="list-group-item active border-0"> Home</Link>
-      <Link href="/courses/1234/modules" id="wd-course-modules-link"
-      className="list-group-item text-danger border-0"> Modules</Link>
+  "use client";
+  import { useParams, usePathname } from "next/navigation";
+  import Link from "next/link";
 
-      {/* <Link href="/courses/1234/piazza" id="wd-course-piazza-link">Piazza</Link><br/> */}
-      {/* <a href="https://piazza.com/" id="wd-course-piazza-link" target="_blank">Piazza</a> */}
-      <Link href="https://piazza.com/" id="wd-course-piazza-link" 
-      className="list-group-item text-danger border-0" target="_blank">Piazza</Link>
+  export default function CourseNavigation() {
+    const { cid } = useParams();
+    const pathname = usePathname();
 
-      {/* <Link href="/courses/1234/zoom" id="wd-course-zoom-link">Zoom</Link><br/> */}
-      <Link href="https://zoom.us/signin#/login" id="wd-course-zoom-link" 
-      className="list-group-item text-danger border-0" target="_blank">Zoom</Link>
+    const links = [
+      { label: "Home",        path: `/courses/${cid}/home` },
+      { label: "Modules",     path: `/courses/${cid}/modules` },
+      { label: "Piazza",      path: "https://piazza.com/", external: true },
+      { label: "Zoom",        path: "https://zoom.us/signin#/login", external: true },
+      { label: "Assignments", path: `/courses/${cid}/assignments` },
+      { label: "Quizzes",     path: `/courses/${cid}/quizzes` },
+      { label: "Grades",      path: `/courses/${cid}/grades` },
+      { label: "People",      path: `/courses/${cid}/people/table` },
+    ];
 
-      <Link href="/courses/1234/assignments" id="wd-course-assignments-link"
-      className="list-group-item text-danger border-0">
-          Assignments</Link>  
-      <Link href="/courses/1234/quizzes" id="wd-course-quizzes-link"
-      className="list-group-item text-danger border-0">Quizzes
-        </Link>
-      <Link href="/courses/1234/grades" id="wd-course-grades-link"
-      className="list-group-item text-danger border-0">Grades</Link>
-      {/* <Link href="/courses/1234/people/table" id="wd-course-people-link">People</Link><br/> */}
-      <Link href="/courses/1234/people/table" id="wd-course-people-link"
-      className="list-group-item text-danger border-0">People</Link>
-
-    </div>
-  );}
+    return (
+      <div id="wd-courses-navigation" className="list-group wd fs-5 rounded-0">
+        {links.map((link) => (
+          <Link
+            key={link.label}
+            href={link.path}
+            target={link.external ? "_blank" : undefined}
+            className={`list-group-item border-0 
+              ${pathname.includes(link.label.toLowerCase()) ? "active" : "text-danger"}`}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+    );
+  }
