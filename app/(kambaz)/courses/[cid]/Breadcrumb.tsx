@@ -5,9 +5,9 @@ export default function Breadcrumb({ course }: { course: { name: string } | unde
   const pathname = usePathname();
   const section = pathname.split("/").pop() || "";
   const capitalized = section.charAt(0).toUpperCase() + section.slice(1);
-  return (
+  return (  
     <span>
-      {course?.name} &gt; {capitalized}
+      {" "} &gt; {capitalized}
     </span>
   );
 }

@@ -1,38 +1,34 @@
 "use client";
 import { ReactNode, useState } from "react";
 import { FaAlignJustify } from "react-icons/fa";
-import { courses } from "../../database";
 import CourseNavigation from "./navigation";
 import Breadcrumb from "./Breadcrumb";
-import { use } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
+import { RootState } from "../../store";
 
-export default function CoursesLayout({ children, params }: Readonly<{ children: ReactNode; params: Promise<{ cid: string }> }>) {
-  const { cid } = use(params);
-  const course = courses.find((course) => course._id === cid);
-  const [showNav, setShowNav] = useState(false);
+export default function CoursesLayout({ children }: { children: ReactNode }) {
+  const { cid } = useParams();
+  const { courses } = useSelector((state: RootState) => state.coursesReducer);
+  const course = courses.find((course: any) => course._id === cid);
+  const [showNav, setShowNav] = useState(true);
 
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
         <FaAlignJustify
           className="me-4 fs-4 mb-1"
-          style={{ cursor: "pointer" }}
-          onClick={() => setShowNav(!showNav)}
-        />
+          onClick={() => setShowNav(!showNav)}/>
+        {course?.name}
         <Breadcrumb course={course} />
       </h2>
       <hr />
-
-      {showNav && (
-        <div className="d-md-none border p-2 mb-2">
-          <CourseNavigation />
-        </div>
-      )}
-
       <div className="d-flex">
-        <div className="d-none d-md-block">
-          <CourseNavigation />
-        </div>
+        {showNav && (
+          <div>
+            <CourseNavigation />
+          </div>
+        )}
         <div className="flex-fill">{children}</div>
       </div>
     </div>

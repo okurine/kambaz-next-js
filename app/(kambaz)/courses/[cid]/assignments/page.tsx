@@ -12,14 +12,19 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { BsGripVertical } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaTrash } from "react-icons/fa6";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import * as db from "../../../database";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../store";
+import { addAssignment, deleteAssignment, updateAssignment } from "./reducer";
+import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments.filter((a: any) => a.course === cid);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
 
   return (
     <div id="wd-assignments">
@@ -31,12 +36,13 @@ export default function Assignments() {
           <FormControl />
         </InputGroup>
 
-        <Button variant="secondary" size="lg" className="ms-2 " id="wd-add-module-btn">
+        <Button variant="secondary" size="lg" className="ms-2" id="wd-add-group-btn">
           <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
           Group
         </Button>
 
-        <Button variant="danger" size="lg" className="m-1" id="wd-add-module-btn">
+        <Button variant="danger" size="lg" className="m-1" id="wd-add-assignment-btn"
+          onClick={() => router.push(`/courses/${cid}/assignments/new`)}>
           <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
           Assignment
         </Button>
@@ -49,16 +55,16 @@ export default function Assignments() {
           <span className="mt-1 fw-bold"> ASSIGNMENTS </span>
           <IoEllipsisVertical className="float-end fs-4" />
           <FaPlus className="float-end fs-4 mx-2" />
-          <span
-            className="badge text-dark border rounded-pill ms-2 float-end"
-            style={{ backgroundColor: "#e9ecef", border: "1px solid #495057" }}
-          >
+          <span className="badge text-dark border rounded-pill ms-2 float-end"
+            style={{ backgroundColor: "#e9ecef", border: "1px solid #495057" }}>
             40% of Total
           </span>
         </div>
 
         <ListGroup className="wd-lessons rounded-0">
-          {assignments.map((assignment: any) => (
+          {assignments
+            .filter((a: any) => a.course === cid)
+            .map((assignment: any) => (
             <ListGroupItem key={assignment._id}
               className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
               <div className="d-flex flex-column">
@@ -76,7 +82,15 @@ export default function Assignments() {
                   <strong>Due</strong> Jan 25 at 11:59pm | 100 pts
                 </div>
               </div>
-              <LessonControlButtons />
+              <div className="d-flex align-items-center gap-2">
+                <FaTrash className="text-danger"
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this assignment?")) {
+                      dispatch(deleteAssignment(assignment._id));
+                    }
+                  }} />
+                <LessonControlButtons />
+              </div>
             </ListGroupItem>
           ))}
         </ListGroup>
