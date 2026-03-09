@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import { RootState } from "../../store";
 import { FormControl, FormSelect, Button } from "react-bootstrap";
-import Link from "next/link";
+
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export default function Profile() {
             onChange={(e) =>
               setProfile({ ...profile, firstName: e.target.value })
             }
-            id="wd-firstanem"
+            id="wd-firstname"
             placeholder="First Name"
             className="mb-2"
             style={{ maxWidth: "300px" }}
@@ -78,7 +78,6 @@ export default function Profile() {
             className="mb-2"
             style={{ maxWidth: "300px" }}
           />
-
           <FormControl
             defaultValue={profile.email}
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
@@ -88,19 +87,23 @@ export default function Profile() {
             style={{ maxWidth: "300px" }}
           />
           <FormSelect
+            value={profile.role}
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}
             id="wd-role"
+            className="mb-2"
             style={{ maxWidth: "300px" }}
           >
-            <option value="USER" defaultChecked>
-              User
-            </option>
             <option value="ADMIN">Admin</option>
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
+            <option value="TA">TA</option>
           </FormSelect>
-
-          <Button onClick={signout} className="w-100 mb-2" id="wd-signout-btn">
+          <Button
+            onClick={signout}
+            className="w-100 mb-2"
+            id="wd-signout-btn"
+            style={{ maxWidth: "300px" }}
+          >
             Sign out
           </Button>
         </div>

@@ -1,3 +1,4 @@
+"use client";
 import HelloRedux from "./hello";
 import CounterRedux from "./CounterRedux";
 import AddRedux from "./AddRedux";
