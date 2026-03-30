@@ -1,4 +1,7 @@
 "use client";
+import { useEffect } from "react";
+import { setAssignments, deleteAssignment } from "./reducer";
+import * as client from "../../client";
 import {
   Button,
   ListGroupItem,
@@ -16,16 +19,31 @@ import { FaPlus, FaTrash } from "react-icons/fa6";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { addAssignment, deleteAssignment, updateAssignment } from "./reducer";
-import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentsReducer,
+  );
 
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  const onDeleteAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(
+      setAssignments(assignments.filter((a: any) => a._id !== assignmentId)),
+    );
+  };
   return (
     <div id="wd-assignments">
       <div className="d-flex align-items-center gap-2 mb-4">
@@ -36,14 +54,30 @@ export default function Assignments() {
           <FormControl />
         </InputGroup>
 
-        <Button variant="secondary" size="lg" className="ms-2" id="wd-add-group-btn">
-          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+        <Button
+          variant="secondary"
+          size="lg"
+          className="ms-2"
+          id="wd-add-group-btn"
+        >
+          <FaPlus
+            className="position-relative me-2"
+            style={{ bottom: "1px" }}
+          />
           Group
         </Button>
 
-        <Button variant="danger" size="lg" className="m-1" id="wd-add-assignment-btn"
-          onClick={() => router.push(`/courses/${cid}/assignments/new`)}>
-          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+        <Button
+          variant="danger"
+          size="lg"
+          className="m-1"
+          id="wd-add-assignment-btn"
+          onClick={() => router.push(`/courses/${cid}/assignments/new`)}
+        >
+          <FaPlus
+            className="position-relative me-2"
+            style={{ bottom: "1px" }}
+          />
           Assignment
         </Button>
       </div>
@@ -55,8 +89,10 @@ export default function Assignments() {
           <span className="mt-1 fw-bold"> ASSIGNMENTS </span>
           <IoEllipsisVertical className="float-end fs-4" />
           <FaPlus className="float-end fs-4 mx-2" />
-          <span className="badge text-dark border rounded-pill ms-2 float-end"
-            style={{ backgroundColor: "#e9ecef", border: "1px solid #495057" }}>
+          <span
+            className="badge text-dark border rounded-pill ms-2 float-end"
+            style={{ backgroundColor: "#e9ecef", border: "1px solid #495057" }}
+          >
             40% of Total
           </span>
         </div>
@@ -65,34 +101,44 @@ export default function Assignments() {
           {assignments
             .filter((a: any) => a.course === cid)
             .map((assignment: any) => (
-            <ListGroupItem key={assignment._id}
-              className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between">
-              <div className="d-flex flex-column">
+              <ListGroupItem
+                key={assignment._id}
+                className="wd-lesson p-3 ps-1 d-flex align-items-start justify-content-between"
+              >
+                <div className="d-flex flex-column">
+                  <div className="d-flex align-items-center gap-2">
+                    <AssignmentControlButtons />
+                    <Link
+                      href={`/courses/${cid}/assignments/${assignment._id}`}
+                      className="text-decoration-none"
+                    >
+                      <span>{assignment.title}</span>
+                    </Link>
+                  </div>
+                  <div className="text-muted small ms-5">
+                    <span className="text-danger">Multiple Modules</span> |{" "}
+                    <strong>Not available until</strong> Jan 17 at 12:00am
+                    <br />
+                    <strong>Due</strong> Jan 25 at 11:59pm | 100 pts
+                  </div>
+                </div>
                 <div className="d-flex align-items-center gap-2">
-                  <AssignmentControlButtons />
-                  <Link href={`/courses/${cid}/assignments/${assignment._id}`}
-                    className="text-decoration-none">
-                    <span>{assignment.title}</span>
-                  </Link>
+                  <FaTrash
+                    className="text-danger"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this assignment?",
+                        )
+                      ) {
+                        onDeleteAssignment(assignment._id);
+                      }
+                    }}
+                  />
+                  <LessonControlButtons />
                 </div>
-                <div className="text-muted small ms-5">
-                  <span className="text-danger">Multiple Modules</span> |{" "}
-                  <strong>Not available until</strong> Jan 17 at 12:00am
-                  <br />
-                  <strong>Due</strong> Jan 25 at 11:59pm | 100 pts
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <FaTrash className="text-danger"
-                  onClick={() => {
-                    if (window.confirm("Are you sure you want to delete this assignment?")) {
-                      dispatch(deleteAssignment(assignment._id));
-                    }
-                  }} />
-                <LessonControlButtons />
-              </div>
-            </ListGroupItem>
-          ))}
+              </ListGroupItem>
+            ))}
         </ListGroup>
       </ListGroupItem>
     </div>

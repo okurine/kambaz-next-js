@@ -1,4 +1,5 @@
 "use client";
+import * as client from "../client";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,11 +13,17 @@ export default function Profile() {
   const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
+  const updateProfile = async () => {
+    const updatedProfile = await client.updateUser(profile);
+    dispatch(setCurrentUser(updatedProfile));
+  };
+
   const fetchProfile = () => {
     if (!currentUser) return redirect("/account/signin");
     setProfile(currentUser);
   };
-  const signout = () => {
+  const signout = async () => {
+    await client.signout();
     dispatch(setCurrentUser(null));
     redirect("/account/signin");
   };
@@ -98,6 +105,14 @@ export default function Profile() {
             <option value="STUDENT">Student</option>
             <option value="TA">TA</option>
           </FormSelect>
+          <button
+            onClick={updateProfile}
+            className="btn btn-primary w-100 mb-2"
+          >
+            {" "}
+            Update{" "}
+          </button>
+
           <Button
             onClick={signout}
             className="w-100 mb-2"

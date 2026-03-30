@@ -18,7 +18,8 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
       <h2 className="text-danger">
         <FaAlignJustify
           className="me-4 fs-4 mb-1"
-          onClick={() => setShowNav(!showNav)}/>
+          onClick={() => setShowNav(!showNav)}
+        />
         {course?.name}
         <Breadcrumb course={course} />
       </h2>
