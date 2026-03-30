@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 import { setCourses } from "../courses/reducer";
-import { enroll, unenroll } from "./enrollmentReducer";
 import { RootState } from "../store";
 
 export default function Dashboard() {
@@ -27,10 +26,13 @@ export default function Dashboard() {
   );
   const isFaculty =
     currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN";
-  const { enrollments } = useSelector(
-    (state: RootState) => state.enrollmentsReducer,
-  );
+
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const [allCourses, setAllCourses] = useState<any[]>([]);
+  useEffect(() => {
+    client.fetchAllCourses().then(setAllCourses);
+  }, []);
+
   const [course, setCourse] = useState<any>({
     _id: "0",
     name: "New Course",
@@ -58,18 +60,16 @@ export default function Dashboard() {
   }, [currentUser]);
 
   const isEnrolled = (courseId: string) =>
-    enrollments.some(
-      (e: any) => e.user === currentUser?._id && e.course === courseId,
-    );
+    courses.some((c: any) => c._id === courseId);
 
   const handleEnroll = async (courseId: string) => {
     await client.enrollInCourse(courseId);
-    dispatch(enroll({ userId: currentUser?._id, courseId }));
+    await fetchCourses();
   };
 
   const handleUnenroll = async (courseId: string) => {
     await client.unenrollFromCourse(courseId);
-    dispatch(unenroll({ userId: currentUser?._id, courseId }));
+    await fetchCourses();
   };
 
   const onDeleteCourse = async (courseId: string) => {
@@ -91,9 +91,7 @@ export default function Dashboard() {
     );
   };
 
-  const displayedCourses = showAllCourses
-    ? courses
-    : courses.filter((c) => isEnrolled(c._id));
+  const displayedCourses = showAllCourses ? allCourses : courses;
 
   return (
     <div id="wd-dashboard">
