@@ -63,12 +63,12 @@ export default function Dashboard() {
     courses.some((c: any) => c._id === courseId);
 
   const handleEnroll = async (courseId: string) => {
-    await client.enrollInCourse(courseId);
+    await client.enrollIntoCourse("current", courseId);
     await fetchCourses();
   };
 
   const handleUnenroll = async (courseId: string) => {
-    await client.unenrollFromCourse(courseId);
+    await client.unenrollFromCourse("current", courseId);
     await fetchCourses();
   };
 

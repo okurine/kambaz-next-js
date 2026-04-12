@@ -1,7 +1,7 @@
 "use client";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import PeopleDetails from "../Details";
+import PeopleDetails from "./Details";
 import { useState } from "react";
 
 export default function PeopleTable({
