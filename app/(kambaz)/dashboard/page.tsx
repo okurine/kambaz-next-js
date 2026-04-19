@@ -14,7 +14,6 @@ import {
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-
 import { setCourses } from "../courses/reducer";
 import { RootState } from "../store";
 
@@ -97,13 +96,15 @@ export default function Dashboard() {
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">
         Dashboard
-        <Button
-          className="float-end"
-          id="wd-enrollment-btn"
-          onClick={() => setShowAllCourses(!showAllCourses)}
-        >
-          Enrollments
-        </Button>
+        {!isFaculty && (
+          <Button
+            className="float-end"
+            id="wd-enrollment-btn"
+            onClick={() => setShowAllCourses(!showAllCourses)}
+          >
+            Enrollments
+          </Button>
+        )}
       </h1>
       <hr />
       {isFaculty && (
@@ -199,29 +200,30 @@ export default function Dashboard() {
                         Edit
                       </button>
                     )}
-                    {isEnrolled(c._id) ? (
-                      <button
-                        className="btn btn-danger btn-sm me-2 float-end"
-                        id="wd-unenroll-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleUnenroll(c._id);
-                        }}
-                      >
-                        Unenroll
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-success btn-sm me-2 float-end"
-                        id="wd-enroll-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleEnroll(c._id);
-                        }}
-                      >
-                        Enroll
-                      </button>
-                    )}
+                    {!isFaculty &&
+                      (isEnrolled(c._id) ? (
+                        <button
+                          className="btn btn-danger btn-bg me-2 float-end"
+                          id="wd-unenroll-btn"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleUnenroll(c._id);
+                          }}
+                        >
+                          Unenroll
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-success btn-bg me-2 float-end"
+                          id="wd-enroll-btn"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleEnroll(c._id);
+                          }}
+                        >
+                          Enroll
+                        </button>
+                      ))}
                   </CardBody>
                 </Link>
               </Card>
