@@ -273,6 +273,7 @@ export default function QuizEditor() {
     const newEditing = new Set(editingIds);
     newEditing.delete(question._id);
     setEditingIds(newEditing);
+
     // update quiz points
     const updatedPoints = questions
       .map((q) => (q._id === question._id ? question : q))
@@ -302,7 +303,8 @@ export default function QuizEditor() {
 
   return (
     <div id="wd-quiz-editor" className="p-4" style={{ maxWidth: "800px" }}>
-      {/* Points + published status */}
+        
+      {/* points + published status */}
       <div className="d-flex justify-content-end align-items-center mb-3 gap-3">
         <span>Points {totalPoints}</span>
         <span className="d-flex align-items-center gap-1">

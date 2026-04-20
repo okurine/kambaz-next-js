@@ -72,7 +72,7 @@ export default function QuizPreview() {
 
   return (
     <div id="wd-quiz-preview" className="p-4" style={{ maxWidth: "800px" }}>
-      {/* the warning */}
+      {/* the warning thing */}
       <div className="alert alert-warning mb-4 text-danger">
         This is a preview of the published version of the quiz.
       </div>
@@ -159,7 +159,7 @@ export default function QuizPreview() {
             />
           )}
 
-          {/* correct answers after submit */}
+          {/* show correct answers after submit */}
           {submitted && (
             <div
               className={`mt-2 small ${isCorrect(q) ? "text-success" : "text-danger"}`}
@@ -188,14 +188,14 @@ export default function QuizPreview() {
         </div>
       )}
 
-      {/* prev / next */}
+      {/* prev/next buttons */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <Button
           variant="outline-secondary"
           disabled={isFirst}
           onClick={() => setCurrentIndex(currentIndex - 1)}
         >
-          ← Previous
+          Previous
         </Button>
         {isLast ? (
           !submitted ? (
@@ -220,7 +220,7 @@ export default function QuizPreview() {
             variant="outline-secondary"
             onClick={() => setCurrentIndex(currentIndex + 1)}
           >
-            Next →
+            Next
           </Button>
         )}
       </div>
