@@ -232,13 +232,6 @@ export default function QuizPreview() {
         </div>
       )}
 
-      <Button
-        variant="link"
-        className="text-dark p-0"
-        onClick={() => router.push(`/courses/${cid}/quizzes/${qid}/edit`)}
-      >
-        <FaPencilAlt className="me-1" /> Keep Editing This Quiz
-      </Button>
     </div>
   );
 }

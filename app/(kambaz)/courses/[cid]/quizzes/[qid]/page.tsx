@@ -25,12 +25,24 @@ export default function QuizDetails() {
     fetchQuiz();
   }, [qid]);
 
+    const handleTogglePublish = async () => {
+    const updated = { ...quiz, published: !quiz.published };
+    await client.updateQuiz(updated);
+    setQuiz(updated);
+  };
+
   if (!quiz) return <div>Loading...</div>;
 
   return (
     <div id="wd-quiz-details" className="p-4" style={{ maxWidth: "700px" }}>
       {isFaculty && (
         <div className="d-flex justify-content-end gap-2 mb-4">
+            <Button
+            variant={quiz.published ? "secondary" : "success"}
+            onClick={handleTogglePublish}
+          >
+            {quiz.published ? "Unpublish" : "Publish"}
+          </Button>
           <Button
             variant="secondary"
             onClick={() =>
